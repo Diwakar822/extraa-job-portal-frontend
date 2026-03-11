@@ -32,7 +32,7 @@ const Dashboard = ({onmessage}) => {
     const handleJobs=async()=>{
         try{
            
-            const res=await axios.get('http://localhost:5000/api/jobs/jobs')
+            const res=await axios.get('https://job-port-backend.onrender.com/api/jobs/jobs')
 
             console.log('length of the jobs',res.data.totaljobs)
             setjobs(res.data.totaljobs)
@@ -124,7 +124,7 @@ const Dashboard = ({onmessage}) => {
 
             const token =localStorage.getItem("token")
 
-            const res= await axios.get('http://localhost:5000/api/application/allapplication',{
+            const res= await axios.get('https://job-port-backend.onrender.com/api/application/allapplication',{
                 headers:{
                     Authorization: `Bearer ${token}`,
                 },
@@ -244,7 +244,7 @@ const Dashboard = ({onmessage}) => {
                                     <td className="px-4 py-5 font-medium pl-6 md:pl-4">{app.jobId?.title || "N/A"}</td>
                                     <td className="px-4 py-5 text-center text-xs font-semibold">{app.experience}y</td>
                                     <td className="px-4 py-5"><span className={getStatusStyle(app.status)}>{app.status}</span></td>
-                                    <td className='px-4 py-5 text-center text-xs font-semibold'><a href={`http://localhost:5000/${app.resume}`} target="_blank" className="text-indigo-600 hover:underline" >View Resume</a></td>
+                                    <td className='px-4 py-5 text-center text-xs font-semibold'><a href={`https://job-port-backend.onrender.com/${app.resume}`} target="_blank" className="text-indigo-600 hover:underline" >View Resume</a></td>
                                     <td className="px-4 py-5 text-right text-xs text-slate-400">
                                         {new Date(app.createdAt).toLocaleDateString()}
                                     </td>

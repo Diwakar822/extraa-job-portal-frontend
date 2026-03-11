@@ -16,7 +16,7 @@ const JobDetails = () => {
 
      const fetchJob = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/jobs/jobs/${id}`);
+      const res = await axios.get(`https://job-port-backend.onrender.com/api/jobs/jobs/${id}`);
       setjob(res.data.jobs);
       console.log(res.data)
     } catch (error) {

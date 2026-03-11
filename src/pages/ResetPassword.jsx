@@ -19,7 +19,7 @@ const ResetPassword = () => {
 
         try {
 
-            await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`,
+            await axios.post(`https://job-port-backend.onrender.com/api/auth/reset-password/${token}`,
                 {newPassword: newpassword})
             toast.success('Password has been changed Now')
 

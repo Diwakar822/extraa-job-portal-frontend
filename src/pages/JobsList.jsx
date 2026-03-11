@@ -34,7 +34,7 @@ const JobsList = () => {
 
     const handleJobs=async(search="")=>{
        try {
-         const res= await axios.get(`http://localhost:5000/api/jobs/jobs?search=${search}`)
+         const res= await axios.get(`https://job-port-backend.onrender.com/api/jobs/jobs?search=${search}`)
          setjobs(res.data?.jobs)
          
         

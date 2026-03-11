@@ -119,7 +119,7 @@ const MyApplicationDetailsPage = () => {
 
                                 <div className="pt-4 border-t border-slate-100">
                                     <a 
-                                        href={`http://localhost:5000/${application.resume}`} 
+                                        href={`https://job-port-backend.onrender.com/${application.resume}`} 
                                         target="_blank" 
                                         rel="noreferrer"
                                         className="flex items-center justify-center gap-2 w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-md shadow-blue-100"
