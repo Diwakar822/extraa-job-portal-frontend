@@ -17,6 +17,7 @@ const MyApplications = () => {
     },[])
 
     const fetchApplications =async()=>{
+          setLoading(true)
         try {
             const res= await application()
             setApllication(res.data.applications)
@@ -29,6 +30,13 @@ const MyApplications = () => {
             setLoading(false)
         }
     }
+
+    if(loading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+      )
 
     const getStatusStyle = (status) => {
         const base = "px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full border ";

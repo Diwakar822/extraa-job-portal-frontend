@@ -12,6 +12,7 @@ const Pages = () => {
     const[message, setmessage]=useState('')
     const[errors, seterrors]=useState({})
     const[showPassword , setShowPassword]=useState(false)
+    const[loading, setLoading]=useState(false)
     const navigate= useNavigate()
 
 
@@ -26,6 +27,7 @@ const Pages = () => {
         if(Object.keys(validationErrors).length > 0){
             return seterrors(validationErrors)
         }
+        setLoading(true)
         try {
 
             const res = await registerUser(form)
@@ -42,10 +44,21 @@ const Pages = () => {
             
         } catch (err) {
             console.log("error:" , err)
-            seterrors(err.response?.data?.message || 'something went worng')
+            seterrors({ api: err.response?.data?.message || "Something went wrong" })
             toast.error('something went worng')
+        }finally{
+          setLoading(false)
         }
     }
+
+       if(loading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+          )
+
+
 
    
     return (
@@ -107,7 +120,7 @@ const Pages = () => {
               className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
             />
           </div>
-          {errors.email && (
+          {errors.name && (
             <p className="text-sm text-red-500">{errors.name}</p>
           )}
         </div>

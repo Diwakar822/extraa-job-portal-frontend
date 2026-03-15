@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Briefcase, MapPin, DollarSign, Bookmark, Search, Bell, Home, User, MessageSquare } from 'lucide-react';
+import { Briefcase, MapPin, DollarSign, Bookmark, Search, Bell, Home, User, MessageSquare, Heart, HeartPlus } from 'lucide-react';
 import { toast } from 'react-toastify';
 import Footer from './Footer';
 
@@ -10,6 +10,8 @@ const JobsList = () => {
     const [jobs, setjobs]=useState([])
     const [searchTerm, setSearchTerm]=useState("")
     const [isMenuOpen, setIsMenuOpen]=useState(false)
+    const [savedJobIds, setSavedJobIds] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const navigate=useNavigate()
 
     const handleLogout=()=>{
@@ -20,10 +22,14 @@ const JobsList = () => {
     }
 
     useEffect(()=>{
-      const delay= setTimeout(() => {
-         handleJobs(searchTerm)
-      }, 1000);
-      return ()=> clearTimeout(delay)
+      if(searchTerm === ""){
+        handleJobs("")
+      }else{
+        const delay =setTimeout(() => {
+            handleJobs(searchTerm);
+        }, 600);
+        return ()=> clearTimeout(delay)
+      }
     },[searchTerm])
 
     const user= localStorage.getItem("user")
@@ -33,6 +39,7 @@ const JobsList = () => {
     
 
     const handleJobs=async(search="")=>{
+        setIsLoading(true)
        try {
          const res= await axios.get(`https://job-port-backend.onrender.com/api/jobs/jobs?search=${search}`)
          setjobs(res.data?.jobs)
@@ -41,11 +48,39 @@ const JobsList = () => {
        } catch (error) {
           console.log("Error Throwed:",error)
 
+       }finally{
+        setIsLoading(false)
        }
     }
 
     console.log("Listed Jobs", jobs)
+
+    const saveJob= async(jobId)=>{
+        try {
+
+            const token= localStorage.getItem("token")
+            
+            await axios.post(`http://localhost:5000/api/jobs/save/${jobId}`,
+                {},
+                {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            })
+            setSavedJobIds((prev)=> [...prev, jobId])
+            toast.success('Job Saved')
+        } catch (error) {
+            console.error("error found:", error)
+            toast.error("Job Already saved")
+        }
+    }
    
+    if(isLoading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+  )
    
     return (
         <div className="min-h-screen bg-[#fafafb] flex flex-col font-sans text-slate-900">
@@ -83,6 +118,13 @@ const JobsList = () => {
                         >
                             <Briefcase size={16} />
                             My Applications
+                        </Link>
+
+                        <Link to="/my-savedJobs" className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-black transition-colors"
+                        onClick={()=>setIsMenuOpen(false)}
+                        >
+                            <HeartPlus size={16} />
+                            My Saved Jobs
                         </Link>
 
                         <button 
@@ -124,7 +166,7 @@ const JobsList = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {jobs.map((item) => (
                         <div key={item._id} className="group relative">
-                            <Link to={`/jobs/${item._id}`} className="block h-full">
+                            {/* <Link to={`/jobs/${item._id}`} className="block h-full"> */}
                                 <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col h-full hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                                     
                                     {/* Card Header */}
@@ -132,8 +174,17 @@ const JobsList = () => {
                                         <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 group-hover:bg-[#ffff22]/10 transition-colors">
                                             <Briefcase size={28} className="text-slate-400 group-hover:text-black transition-colors" />
                                         </div>
-                                        <button className="p-2 rounded-xl text-slate-300 hover:text-black hover:bg-slate-50 transition-all">
-                                            <Bookmark size={20} />
+                                        <button title='Save Job' className={`p-2 cursor-pointer rounded-xl transition-all ${
+                                            savedJobIds.includes(item._id)
+                                            ? "bg-black text-[#ffff22] shadow-lg shadow-yellow-500/20"
+                                            : "text-slate-300 hover:text-black hover:bg-slate-50"
+                                        }`}
+                                         onClick={()=>saveJob(item._id)}
+                                         disabled={savedJobIds.includes(item._id)}
+                                         >
+                                            <Bookmark size={20} className='transition-colors'
+                                            fill={savedJobIds.includes(item._id) ? "currentColor" : "none"  }
+                                            />
                                         </button>
                                     </div>
 
@@ -158,12 +209,14 @@ const JobsList = () => {
 
                                     {/* Quick Apply Button - Simulated */}
                                     <div className="pt-4 border-t border-slate-50">
+                                        <Link to={`/jobs/${item._id}`} className="block h-full">
                                         <button className="w-full bg-slate-900 text-white font-bold py-3.5 rounded-2xl group-hover:bg-[#ffff22] group-hover:text-black transition-all active:scale-95 shadow-lg shadow-black/5 cursor-pointer">
                                             View Details
                                         </button>
+                                        </Link>
                                     </div>
                                 </div>
-                            </Link>
+                            
                         </div>
                     ))}
                 </div>

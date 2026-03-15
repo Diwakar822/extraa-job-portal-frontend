@@ -17,6 +17,7 @@ const Login = () => {
     const [errors,seterrors]=useState({})
     const [showSuccess, setshowSuccess]=useState(false)
     const[showPassword, setShowPassword]=useState(false)
+    const[loading, setLoading]=useState(false)
     const navigate= useNavigate()
 
     const handleChange=(e)=>{
@@ -30,6 +31,7 @@ const Login = () => {
         if(Object.keys(validationErrors).length > 0){
              return seterrors(validationErrors)
         }
+        setLoading(true)
 
         try {
             const res= await loginUser(form)
@@ -61,11 +63,19 @@ const Login = () => {
             console.log("errors:", error)
             seterrors(error.response?.data?.message || "something Went Worng")
             
+        }finally{
+          setLoading(false)
         }
 
 
     }
-
+     
+    if(loading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+  )
 
     return (
          <div className="min-h-screen bg-[#fafaf5] flex flex-col items-center px-6 py-12 text-slate-900">

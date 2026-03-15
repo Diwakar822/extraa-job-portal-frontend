@@ -52,7 +52,7 @@ const JobDetails = () => {
                 </button>
                 <div className="flex gap-1">
                     <button className="p-2 text-slate-400 hover:text-black transition-colors"><Share2 size={20} /></button>
-                    <button className="p-2 text-slate-400 hover:text-black transition-colors"><Bookmark size={20} /></button>
+                    <button className="p-2 text-slate-400 hover:text-black transition-colors cursor-pointer" onClick={()=>navigate('/my-savedJobs')}><Bookmark size={20} /></button>
                 </div>
             </div>
 

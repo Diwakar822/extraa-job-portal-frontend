@@ -19,6 +19,7 @@ import MyApplicationDetailsPage from './pages/MyApplicationDetailsPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminHome from './components/AdminHome';
+import SavedJobs from './pages/savedJobs';
 
 
 const App = () => {
@@ -71,6 +72,7 @@ const App = () => {
         <Route path='/apply/:id' element={<ProtectedRoute><ApplyJob/></ProtectedRoute>}/>
         <Route path='/my-applications' element={<ProtectedRoute><MyApplications/></ProtectedRoute>}/>
         <Route path='/my-applications/:id' element={<ProtectedRoute><MyApplicationDetailsPage/></ProtectedRoute>}/>
+        <Route path='/my-savedJobs' element={<ProtectedRoute><SavedJobs/></ProtectedRoute>}/>
         {/* <Route path='/admin' element={
           <ProtectedRoute role="admin">
              <AdminDashboard/>

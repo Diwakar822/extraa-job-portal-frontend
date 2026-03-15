@@ -14,6 +14,7 @@ const MyApplicationDetailsPage = () => {
     },[])
 
     const HandleDetails= async ()=>{
+        setLoading(true)
         try {
             const res = await applicationById(id)
             setApplication(res.data.appliedJob)
@@ -29,7 +30,15 @@ const MyApplicationDetailsPage = () => {
 
     const { jobId } = application;
 
-    if (loading) return <div className="p-10 text-center">Loading details...</div>;
+    
+    if(loading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+      )
+
+   
     if (!application) return <div className="p-10 text-center">No application found.</div>;
     return (
        <div className="min-h-screen bg-slate-50 p-4 md:p-10">

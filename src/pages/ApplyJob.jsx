@@ -50,6 +50,7 @@ const ApplyJob = () => {
         for(let [key, value] of formData.entries()){
             console.log(key, value)
         }
+        setloading(true)
         try {
             setloading(true);
             const res= await applyJob(formData);
@@ -73,6 +74,13 @@ const ApplyJob = () => {
 
     console.log("here the data:", state?.jobTitle)
 
+    if(loading)
+    return(
+          <div className="min-h-screen flex items-center justify-center bg-[#fafafb]">
+            <div className="w-10 h-10 border-4 border-[#ffff22] border-t-transparent rounded-full animate-spin" />
+        </div>
+      )
+
     return (
 
         <div className="min-h-screen bg-[#F8F9FA] flex flex-col font-sans text-slate-900">
@@ -80,10 +88,10 @@ const ApplyJob = () => {
  {/* 1. Header Section */}
 
 <div className="bg-white px-6 py-6 flex items-center justify-between border-b border-slate-100"> 
-<button onClick={() => navigate(-1)} className="p-2 -ml-2 hover:bg-slate-50 rounded-full transition-colors">
+<button onClick={() => navigate(-1)} className="p-2 cursor-pointer -ml-2 hover:bg-slate-50 rounded-full transition-colors">
  <ArrowLeft size={24} /> </button> <div className="text-center"> 
 <h1 className="text-sm font-black uppercase tracking-widest text-slate-400">{state?.jobTitle}</h1> 
-<p className="text-[10px] font-bold text-slate-300 uppercase mt-1">Step 1</p> </div>
+<p className="text-[10px] font-bold text-slate-300 uppercase mt-1">Steps</p> </div>
 <div className="w-10" /> {/* Spacer */} </div> 
 
 {/* 2. Progress Bar */} 
