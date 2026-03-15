@@ -19,7 +19,7 @@ const SavedJobs = () => {
 
         try {
              const token= localStorage.getItem("token")
-             const res =await axios.get('http://localhost:5000/api/jobs/saved',{
+             const res =await axios.get('https://job-port-backend.onrender.com/api/jobs/saved',{
             headers:{
                 Authorization: `Bearer ${token}`
             }
@@ -50,7 +50,7 @@ const SavedJobs = () => {
 
             const token=localStorage.getItem("token")
             
-            await axios.delete(`http://localhost:5000/api/jobs/unsave/${jobId}`,{
+            await axios.delete(`https://job-port-backend.onrender.com/api/jobs/unsave/${jobId}`,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 }

@@ -60,7 +60,7 @@ const JobsList = () => {
 
             const token= localStorage.getItem("token")
             
-            await axios.post(`http://localhost:5000/api/jobs/save/${jobId}`,
+            await axios.post(`https://job-port-backend.onrender.com/api/jobs/save/${jobId}`,
                 {},
                 {
                 headers:{
