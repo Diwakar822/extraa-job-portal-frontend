@@ -19,7 +19,10 @@ import MyApplicationDetailsPage from './pages/MyApplicationDetailsPage';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import AdminHome from './components/AdminHome';
-import SavedJobs from './pages/savedJobs';
+import SavedJobs from './pages/SavedJobs';
+
+
+
 
 
 const App = () => {
