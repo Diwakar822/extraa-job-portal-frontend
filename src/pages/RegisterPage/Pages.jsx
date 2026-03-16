@@ -45,7 +45,8 @@ const Pages = () => {
         } catch (err) {
             console.log("error:" , err)
             seterrors({ api: err.response?.data?.message || "Something went wrong" })
-            toast.error('something went worng')
+            const errormessage= err.response?.data?.message
+            toast.error(errormessage)
         }finally{
           setLoading(false)
         }
