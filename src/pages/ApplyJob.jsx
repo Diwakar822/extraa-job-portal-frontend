@@ -60,7 +60,7 @@ const ApplyJob = () => {
             
         } catch (error) {
             console.log("Find the error:",error)
-            toast.error('You Already applied for this job')
+            toast.error(error.response?.data?.message)
             setMessage(error.response?.data?.message || "Apply Faild")
         }finally{
             setloading(false)
